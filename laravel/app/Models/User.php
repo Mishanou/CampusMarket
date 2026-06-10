@@ -29,4 +29,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Товары, которые этот пользователь выставил на продажу (как продавец)
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'user_id');
+    }
+
+    /**
+     * Заказы, которые этот пользователь оформил (как покупатель)
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
 }
