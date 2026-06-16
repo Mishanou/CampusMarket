@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class CategoryFactory extends Factory
 {
@@ -11,11 +12,14 @@ class CategoryFactory extends Factory
 
     public function definition(): array
     {
+        $name = $this->faker->unique()->randomElement([
+            'Электроника', 'Книги и учебники', 'Одежда и мерч', 
+            'Канцтовары', 'Услуги и репетиторство', 'Спорт и отдых'
+        ]);
+        
         return [
-            'name' => $this->faker->unique()->randomElement([
-                'Электроника', 'Книги и учебники', 'Одежда и мерч', 
-                'Канцтовары', 'Услуги и репетиторство', 'Спорт и отдых'
-            ]),
+            'name' => $name,
+            'slug' => Str::slug($name),
         ];
     }
 }
