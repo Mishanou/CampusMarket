@@ -14,7 +14,10 @@ class OrderFactory extends Factory
     {
         return [
             'user_id' => User::factory(), // Покупатель
-            'status' => $this->faker->randomElement(['pending', 'processing', 'completed', 'cancelled']),
+            'status' => $this->faker->randomElement(['pending', 'completed', 'cancelled']),
+            'total_price' => $this->faker->randomFloat(2, 100, 10000),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }
