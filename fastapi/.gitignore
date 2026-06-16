@@ -1,0 +1,59 @@
+# Виртуальное окружение
+venv/
+env/
+.env/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Переменные окружения (ВАЖНО!)
+.env
+.env.local
+.env.*.local
+.env.prod
+.env.dev
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Логи
+*.log
+
+# Временные файлы (включая ваши PING и PUBLISH)
+*.tmp
+*.temp
+PING
+PUBLISH
+test_*.py
+*.bak
+
+# Базы данных
+*.db
+*.sqlite
+
+# Докер
+*.pid
+docker-compose.override.yml
+
+# Секреты и ключи
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+credentials/
