@@ -34,4 +34,5 @@ async def redis_sub_listener():
                     
         except Exception as e:
             print(f"Ошибка Redis: {e}. Переподключение через 5 секунд...")
+            break
             await asyncio.sleep(5)
