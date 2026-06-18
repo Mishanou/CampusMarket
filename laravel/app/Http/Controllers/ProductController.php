@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     /**
+     * Отображение витрины всех товаров для главной страницы.
+     */
+    public function welcome()
+    {
+        $products = Product::with(['category', 'seller'])->latest()->get();
+
+        return view('welcome', compact('products'));
+    }
+
+    /**
      * Показать товары текущего продавца (Личный кабинет)
      */
     public function index()
