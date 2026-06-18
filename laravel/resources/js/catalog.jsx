@@ -7,10 +7,10 @@ function ProductCard({ product, isAuth }) {
             <div>
                 <div className="flex justify-between items-start mb-2">
                     <span className="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded font-semibold uppercase tracking-wide">
-                        {product.category ? product.category.name : 'Без категории'}
+                        {product.category_name}
                     </span>
                     <span className="text-lg font-bold text-green-600">
-                        {product.price} ₸
+                        {product.price} ₽
                     </span>
                 </div>
                 
@@ -20,14 +20,14 @@ function ProductCard({ product, isAuth }) {
 
             <div className="mt-4 pt-4 border-t border-gray-100">
                 <div className="text-xs text-gray-500 mb-3">
-                    Продавец: <span className="font-medium text-gray-700">{product.user ? product.user.name : 'Студент'}</span>
+                    Продавец: <span className="font-medium text-gray-700">{product.seller_name}</span>
                 </div>
 
                 {isAuth ? (
                     <form action="/cart/add" method="POST" className="w-full">
                         <input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]').content} />
                         <input type="hidden" name="product_id" value={product.id} />
-                        <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-center font-semibold py-2 px-4 rounded transition text-sm">
+                        <button type="submit" className="block w-full text-center bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded transition text-sm">
                             Добавить в корзину
                         </button>
                     </form>
