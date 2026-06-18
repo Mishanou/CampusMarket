@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-console.log('🔥 React компонент запущен!');
-
 // Компонент карточки товара
 function ProductCard({ product, isAuth }) {
     return (
