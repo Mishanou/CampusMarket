@@ -54,7 +54,7 @@
                                                 </span>
                                             </td>
                                             <td class="fw-bold text-primary">
-                                                {{ number_format($product->price, 2) }} ₽
+                                                {{ $product->price }} ₽
                                             </td>
                                             <td class="text-end">
                                                 <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-outline-primary me-1">
