@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="h4 mb-0 text-gray-800">
                 {{ __('Витрина товаров CampusMarket') }}
             </h2>
             @auth
-                <a href="{{ route('products.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm transition">
-                    + Выставить товар
+                <a href="{{ route('products.create') }}" class="btn btn-primary">
+                    <i class="fas fa-plus me-1"></i> Добавить товар
                 </a>
             @endauth
         </div>

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from database import get_db_conn
 
-router = APIRouter(tags=["Products"])
+router = APIRouter(prefix="/api", tags=["Products"])
 
-@router.get("/api/products")
+@router.get("/products")
 async def get_all_products():
     conn = await get_db_conn()
     async with conn.cursor() as cur:
@@ -19,7 +19,7 @@ async def get_all_products():
     conn.close()
     return products
 
-@router.get("/api/products/{product_id}")
+@router.get("/products/{product_id}")
 async def get_product_detail(product_id: int):
     conn = await get_db_conn()
     async with conn.cursor() as cur:

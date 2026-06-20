@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -13,11 +14,11 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(), // Покупатель
-            'status' => $this->faker->randomElement(['pending', 'completed', 'cancelled']),
-            'total_price' => $this->faker->randomFloat(2, 100, 10000),
-            'created_at' => now(),
-            'updated_at' => now(),
+            'product_id' => Product::inRandomOrder()->first()?->id ?? Product::factory(),
+            'seller_id' => User::inRandomOrder()->first()?->id ?? User::factory(),
+            'buyer_id' => User::inRandomOrder()->first()?->id ?? User::factory(),
+            'price_at_purchase' => $this->faker->numberBetween(100, 5000),
+            'status' => 'pending',
         ];
     }
 }

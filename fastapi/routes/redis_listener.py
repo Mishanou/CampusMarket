@@ -14,7 +14,9 @@ async def redis_sub_listener():
         try:
             r = aioredis.from_url(
                 f"redis://{redis_host}:{redis_port}",
-                decode_responses=True
+                decode_responses=True,
+                socket_timeout=None,
+                health_check_interval=30
             )
             
             pubsub = r.pubsub()
@@ -34,5 +36,4 @@ async def redis_sub_listener():
                     
         except Exception as e:
             print(f"Ошибка Redis: {e}. Переподключение через 5 секунд...")
-            break
             await asyncio.sleep(5)
