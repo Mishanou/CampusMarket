@@ -60,42 +60,111 @@ docker exec cm_laravel php artisan migrate --force --seed
 
 ## Структура БД
 
-erDiagram
-    users {
-        bigint id PK
-        string name
-        string email UK
-        timestamp email_verified_at
-        string password
-        string remember_token
-        timestamps columns
-    }
-    categories {
-        bigint id PK
-        string name
-        string slug UK
-        timestamps columns
-    }
-    products {
-        bigint id PK
-        bigint user_id FK
-        bigint category_id FK
-        string name
-        text description
-        integer price
-        timestamps columns
-    }
-    orders {
-        bigint id PK
-        bigint product_id FK
-        bigint seller_id FK
-        bigint buyer_id FK
-        unsigned_integer price_at_purchase
-        string status
-        timestamps columns
-    }
-    users ||--o{ products : "выставляет на продажу"
-    users ||--o{ orders : "покупает (buyer_id)"
-    users ||--o{ orders : "продает (seller_id)"
-    categories ||--o{ products : "содержит"
-    products ||--o{ orders : "включается в"
+| Таблица | Поле | Тип | Индексы / Описание |
+| --- | --- | --- | --- |
+| **users** | `id` <br>
+
+<br> `name` <br>
+
+<br> `email` <br>
+
+<br> `email_verified_at` <br>
+
+<br> `password` <br>
+
+<br> `remember_token` | BigInt <br>
+
+<br> String <br>
+
+<br> String <br>
+
+<br> Timestamp <br>
+
+<br> String <br>
+
+<br> String | **PK** (Первичный ключ) <br>
+
+<br> <br>
+
+<br> **Unique** (Уникальный) <br>
+
+<br> Nullable <br>
+
+<br> <br>
+
+<br> Nullable |
+| **categories** | `id` <br>
+
+<br> `name` <br>
+
+<br> `slug` | BigInt <br>
+
+<br> String <br>
+
+<br> String | **PK** <br>
+
+<br> <br>
+
+<br> **Unique** (Для URL) |
+| **products** | `id` <br>
+
+<br> `user_id` <br>
+
+<br> `category_id` <br>
+
+<br> `name` <br>
+
+<br> `description` <br>
+
+<br> `price` | BigInt <br>
+
+<br> BigInt <br>
+
+<br> BigInt <br>
+
+<br> String <br>
+
+<br> Text <br>
+
+<br> Integer | **PK** <br>
+
+<br> **FK** (Связь с `users.id`, onDelete: cascade) <br>
+
+<br> **FK** (Связь с `categories.id`, onDelete: cascade) <br>
+
+<br> <br>
+
+<br> Nullable <br>
+
+<br> Unsigned |
+| **orders** | `id` <br>
+
+<br> `product_id` <br>
+
+<br> `seller_id` <br>
+
+<br> `buyer_id` <br>
+
+<br> `price_at_purchase` <br>
+
+<br> `status` | BigInt <br>
+
+<br> BigInt <br>
+
+<br> BigInt <br>
+
+<br> BigInt <br>
+
+<br> Unsigned Int <br>
+
+<br> String | **PK** <br>
+
+<br> **FK** (Связь с `products.id`, onDelete: cascade) <br>
+
+<br> **FK** (Связь с `users.id`, onDelete: cascade) <br>
+
+<br> **FK** (Связь с `users.id`, onDelete: cascade) <br>
+
+<br> Фиксация цены на момент покупки <br>
+
+<br> По умолчанию: `'pending'` |
