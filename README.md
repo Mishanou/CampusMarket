@@ -60,7 +60,7 @@ docker exec cm_laravel php artisan migrate --force --seed
 
 ## Структура БД
 
-erDiagra
+erDiagram
     users {
         bigint id PK
         string name
