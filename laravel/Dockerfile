@@ -47,7 +47,7 @@ RUN useradd -G www-data,root -u 1000 -d /home/www www \
 
 # Копируем файлы и выставляем права ДО переключения пользователя
 COPY . .
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+RUN composer install --no-interaction --optimize-autoloader
 RUN npm install && npm run build
 
 # Права на storage и cache — владелец + разрешения
