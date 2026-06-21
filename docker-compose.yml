@@ -48,6 +48,7 @@ services:
     volumes:
       - ./laravel:/var/www
       - /var/www/vendor
+      - /var/www/public/build
     depends_on:
       mysql:
         condition: service_healthy
