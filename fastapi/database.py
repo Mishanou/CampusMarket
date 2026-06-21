@@ -5,7 +5,7 @@ from fastapi import HTTPException
 async def get_db_conn():
     try:
         return await aiomysql.connect(
-            host=os.getenv("DB_HOST", "127.0.0.1"),
+            host=os.getenv("DB_HOST", "mysql"),
             port=int(os.getenv("DB_PORT", 3306)),
             user=os.getenv("DB_USER", "cm"),
             password=os.getenv("DB_PASSWORD", ""),
