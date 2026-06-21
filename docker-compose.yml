@@ -47,6 +47,7 @@ services:
     restart: always
     volumes:
       - ./laravel:/var/www
+      - /var/www/vendor
     depends_on:
       mysql:
         condition: service_healthy
