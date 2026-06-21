@@ -60,38 +60,46 @@ docker exec cm_laravel php artisan migrate --force --seed
 
 ## Структура БД
 
-  ┌────────────────┐               ┌────────────────┐
-  │   categories   │               │     users      │
-  ├────────────────┤               ├────────────────┤
-  │ id (PK)        │               │ id (PK)        │
-  │ name           │               │ name           │
-  │ slug (Unique)  │               │ email (Unique) │
-  └───────┬────────┘               └────┬───┬───┬───┘
-          │                             │   │   │
-          │ 1                           │ 1 │ 1 │ 1
-          │                             │   │   │
-          │ ∞ (category_id)             │   │   │
-  ┌───────▼────────┐                    │   │   │
-  │    products    │◄───────────────────┘   │   │
-  ├────────────────┤  ∞ (user_id)           │   │
-  │ id (PK)        │                        │   │
-  │ user_id (FK)   │◄──────────────┐        │   │
-  │ category_id(FK)│               │        │   │
-  │ name           │               │        │   │
-  │ description    │               │        │   │
-  │ price          │               │        │   │
-  └───────┬────────┘               │        │   │
-          │                        │        │   │
-          │ 1                      │        │   │
-          │                        │        │   │
-          │ ∞ (product_id)         │ ∞      │   │ ∞
-  ┌───────▼────────────────────────┴────────┼───┴────┐
-  │                 orders                  │        │
-  ├─────────────────────────────────────────┤        │
-  │ id (PK)                                 │        │
-  │ product_id (FK -> products)             │        │
-  │ seller_id  (FK -> users)                │        │
-  │ buyer_id   (FK -> users) ◄──────────────┘        │
-  │ price_at_purchase                       │        │
-  │ status                                  │        │
-  └──────────────────────────────────────────────────┘
+erDiagram
+    users {
+        bigint id PK
+        string name
+        string email UK
+        timestamp email_verified_at
+        string password
+        string remember_token
+        timestamps columns
+    }
+
+    categories {
+        bigint id PK
+        string name
+        string slug UK
+        timestamps columns
+    }
+
+    products {
+        bigint id PK
+        bigint user_id FK
+        bigint category_id FK
+        string name
+        text description
+        integer price
+        timestamps columns
+    }
+
+    orders {
+        bigint id PK
+        bigint product_id FK
+        bigint seller_id FK
+        bigint buyer_id FK
+        unsigned_integer price_at_purchase
+        string status
+        timestamps columns
+    }
+
+    users ||--o{ products : "выставляет на продажу"
+    users ||--o{ orders : "покупает (buyer_id)"
+    users ||--o{ orders : "продает (seller_id)"
+    categories ||--o{ products : "содержит"
+    products ||--o{ orders : "включается в"
