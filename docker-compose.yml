@@ -15,7 +15,7 @@ services:
     networks:
       - campus_market_net
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "cm", "-pcm_password"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "cm", "-p123"]
       interval: 10s
       timeout: 5s
       retries: 5
