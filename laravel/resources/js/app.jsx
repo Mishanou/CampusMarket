@@ -11,7 +11,7 @@ Alpine.start();
 function initNotificationWebSocket(userId) {
     if (!userId) return;
 
-    const wsUrl = `ws://${window.location.host}/ws/${userId}`;
+    const wsUrl = `wss://${window.location.host}/ws/${userId}`;
     const socket = new WebSocket(wsUrl);
 
     socket.onopen = () => {
