@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Создаем еще 10 случайных пользователей
-        $randomUsers = User::factory(10)->create();
+        $randomUsers = User::factory(5)->create();
 
         // Объединяем их в одну коллекцию, чтобы тестовый юзер тоже участвовал в рынке
         $users = collect([$testUser])->concat($randomUsers);
@@ -30,15 +30,15 @@ class DatabaseSeeder extends Seeder
         // Создаем товары и распределяем их между категориями и случайными продавцами
         $products = collect();
         foreach ($categories as $category) {
-            // Для каждой категории генерируем от 3 до 5 товаров
-            $products->push(...Product::factory(rand(3, 5))->create([
+            // Для каждой категории генерируем от 1 до 3 товаров
+            $products->push(...Product::factory(rand(1, 3))->create([
                 'category_id' => $category->id,
                 'user_id' => $users->random()->id, // Случайный студент становится продавцом товара
             ]));
         }
 
         // Имитируем отправку запросов на покупку
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 8; $i++) {
             // Выбираем случайный товар
             $product = $products->random();
 
