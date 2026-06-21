@@ -41,9 +41,7 @@ class Product extends Model
         'category_id',
         'name',
         'description', 
-        'price',
-        'image_url', 
-        'stock'
+        'price'
     ];
 
     // Товар пренадлежит категории
