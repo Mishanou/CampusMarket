@@ -5,7 +5,7 @@ import redis.asyncio as aioredis
 from connection_manager import manager
 
 async def redis_sub_listener():
-    redis_host = os.getenv("REDIS_HOST", "127.0.0.1")
+    redis_host = os.getenv("REDIS_HOST", "redis")
     redis_port = int(os.getenv("REDIS_PORT", 6379))
     
     print(f"Запуск подписки на Redis канал 'new_order' ({redis_host}:{redis_port})...")

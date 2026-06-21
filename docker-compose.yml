@@ -1,0 +1,100 @@
+services:
+  # База данных MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: cm_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: campus_market
+      MYSQL_USER: cm
+      MYSQL_PASSWORD: 123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - campus_market_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "cm", "-pcm_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis для Pub/Sub и WebSockets
+  redis:
+    image: redis:7-alpine
+    container_name: cm_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - campus_market_net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Laravel
+  laravel:
+    build:
+      context: ./laravel
+      dockerfile: Dockerfile
+    container_name: cm_laravel
+    restart: always
+    volumes:
+      - ./laravel:/var/www
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - campus_market_net
+
+  # FastAPI
+  fastapi:
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile
+    container_name: cm_fastapi
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./fastapi:/app
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - campus_market_net
+
+  # Nginx
+  nginx:
+    image: nginx:alpine
+    container_name: cm_nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./laravel/public:/var/www/public
+    depends_on:
+      - laravel
+      - fastapi
+    networks:
+      - campus_market_net
+      
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  campus_market_net:
+    driver: bridge

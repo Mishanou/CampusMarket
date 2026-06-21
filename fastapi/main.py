@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from connection_manager import manager
 from database import get_db_conn
 from routes.redis_listener import redis_sub_listener
-from routes import status_router, products_router, websocket_router, buy
+from routes import products_router, websocket_router, buy
 
 load_dotenv()
 
@@ -20,7 +20,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(status_router)
 app.include_router(products_router)
 app.include_router(websocket_router)
 app.include_router(buy.router)

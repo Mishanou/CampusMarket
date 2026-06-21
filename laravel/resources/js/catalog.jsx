@@ -52,7 +52,7 @@ export default function CatalogApp({ initialUserId }) {
     const isAuth = !!initialUserId;
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8001/api/products')
+        fetch('api/products')
             .then(response => {
                 if (!response.ok) throw new Error('Ошибка сети при ответе от API-сервера');
                 return response.json();
@@ -77,7 +77,7 @@ export default function CatalogApp({ initialUserId }) {
         if (!modalProduct) return;
         setIsBuying(true);
         try {
-            const response = await fetch('http://127.0.0.1:8001/api/buy', {
+            const response = await fetch('/api/buy', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
