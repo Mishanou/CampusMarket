@@ -60,7 +60,7 @@ docker exec cm_laravel php artisan migrate --force --seed
 
 ## Структура БД
 
-erDiagram
+erDiagra
     users {
         bigint id PK
         string name
@@ -70,14 +70,12 @@ erDiagram
         string remember_token
         timestamps columns
     }
-
     categories {
         bigint id PK
         string name
         string slug UK
         timestamps columns
     }
-
     products {
         bigint id PK
         bigint user_id FK
@@ -87,7 +85,6 @@ erDiagram
         integer price
         timestamps columns
     }
-
     orders {
         bigint id PK
         bigint product_id FK
@@ -97,7 +94,6 @@ erDiagram
         string status
         timestamps columns
     }
-
     users ||--o{ products : "выставляет на продажу"
     users ||--o{ orders : "покупает (buyer_id)"
     users ||--o{ orders : "продает (seller_id)"
