@@ -1,3 +1,14 @@
+FROM node:20-alpine AS frontend-builder
+
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install
+COPY resources/ ./resources/
+COPY vite.config.js ./
+COPY public/ ./public/
+RUN npm run build
+
+
 FROM php:8.3-fpm
 
 # Установка необходимых системных библиотек
